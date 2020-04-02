@@ -6,10 +6,17 @@ import { makeAugmentedSchema } from 'neo4j-graphql-js';
 export default function() {
 
     const typeDefs = `
+
+    type Cuisine{
+      type: String
+    }
+
+
     type Query {
         "A simple type for getting started!"
         hello: String
       }
+
 
     `;
     const resolvers = {
