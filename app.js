@@ -13,6 +13,17 @@ export default function() {
         name: String
         restaurants: [Restaurant] @relation(name: "ATE_AT", direction: "OUT")
     }
+    type Review {
+        foods: [String],
+        starRating: Float
+        reviewSummary: String
+        images: [Image] @relation(name: "HAS_IMAGE", direction: "OUT")
+        author: User @relation(name: "HAS_POST", direction: "IN")
+    }
+    type Image {
+        caption: String
+        url: String
+    }
     type Cuisine{
       type: String
     }
