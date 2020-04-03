@@ -12,6 +12,7 @@ export default function() {
         born: Date
         name: String
         restaurants: [Restaurant] @relation(name: "ATE_AT", direction: "OUT")
+        reviews: [Review] @relation(name: "HAS_POST", direction: "OUT")
     }
     type Review {
         foods: [String],
@@ -33,6 +34,7 @@ export default function() {
         info: String
         cuisines: [Cuisine] @relation(name: "TYPE_OF", direction: "OUT")
         location: Municipality @relation(name: "IS_IN", direction: "OUT")
+        reviews: [Review] @relation(name: "FOOD_REVIEW", direction: "IN")
     }
 
     type Municipality {
