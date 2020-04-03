@@ -6,10 +6,7 @@ import {schema} from '../schema'
 class ConfigureApolloServer {
 
     configure() {
-        const driver = neo4j.driver(
-            'bolt://localhost:7687',
-            neo4j.auth.basic('neo4j', 'test')
-        );
+        const driver = confDB.init();
         return new ApolloServer({ schema, context: { driver }});
     }
 }
