@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "better-npm-run start:dev"
   },
   "author": "",
   "license": "ISC",
@@ -16,11 +17,21 @@
     "@babel/register": "^7.9.0",
     "apollo-server": "^2.11.0",
     "babel-eslint": "^10.1.0",
+    "better-npm-run": "^0.1.1",
     "config": "^3.2.4",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
     "neo4j-driver": "^4.0.2",
     "neo4j-graphql-js": "^2.13.0"
+  },
+  "betterScripts": {
+    "start:dev": {
+      "command": "nodemon --watch src --watch config index.js",
+      "env": {
+        "NODE_ENV": "dev",
+        "PORT": 3004
+      }
+    }
   }
 }
