@@ -1,0 +1,21 @@
+CREATE (Bento:User {name:'William Pring', userName: 'Bento', born: date({year:1999, month:5, day:6}), about:'Foodie'})
+CREATE (BeefBento:User {name:'Will Pringles', userName: 'BeefBento', born: date({year:1984, month:10, day:11}), about:'Foodie'})
+
+CREATE (BentoPost:Review {reviewSummary:'Amazing Thai Food MUST TRY!!!!', starRating: 4.5, foods: ['Thai Chicken Wings', 'Thai Ice Tea']})
+CREATE (locateCountry:Country {country: 'Canada'} )
+CREATE (locateMunicipality:Municipality {city: 'Toronto', provienceState: "Ontario"} )
+CREATE (PAI:Restaurant {name: 'PAI', bio: 'blah', priceRange: 'medium'})
+CREATE(Thai: Cuisine {type: 'Thai' })
+CREATE (PAI)-[:TYPE_OF]->(Thai)
+
+CREATE (PAI)-[:IS_IN]->(locateMunicipality)
+CREATE (locateMunicipality)-[:EXIST]->(locateCountry)
+
+CREATE (BENTO_PICTURE:Image {caption: 'Thai Chicken Wing', url: 'https://via.placeholder.com/150'})
+CREATE (BENTO_PICTURE1:Image {caption: 'Thai Ice Tea', url: 'https://via.placeholder.com/150'})
+CREATE (BentoPost)-[:HAS_IMAGE]->(BENTO_PICTURE)
+CREATE (BentoPost)-[:HAS_IMAGE]->(BENTO_PICTURE1)
+CREATE (Bento)-[:HAS_POST]->(BentoPost)
+CREATE (Bento)-[:ATE_AT]->(PAI)
+CREATE (BeefBento)-[:ATE_AT]->(PAI)
+CREATE (BentoPost)-[:FOOD_REVIEW]->(PAI)
