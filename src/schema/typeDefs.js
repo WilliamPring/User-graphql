@@ -51,6 +51,8 @@ const typeDefs = `
         cuisines: [Cuisine] @relation(name: "TYPE_OF", direction: "OUT")
         location: City @relation(name: "LOCATED_AT", direction: "OUT")
         reviews: [Review] @relation(name: "FOOD_REVIEW", direction: "IN")
+        postalCode: String
+        address: String
         vistedCount: ATE_AT
     }
 
@@ -72,6 +74,13 @@ const typeDefs = `
 
     input CountryInput {
         countryName: String!
+        municipalities: [MunicipalityInput]
+    }
+
+    input MunicipalityInput {
+        provienceState: String
+        country: String
+        cities: String
     }
 
     type Mutation {
