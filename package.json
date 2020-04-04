@@ -32,6 +32,13 @@
         "NODE_ENV": "dev",
         "PORT": 3004
       }
+    },
+    "start:prod": {
+      "command": "nodemon --watch src --watch config index.js",
+      "env": {
+        "NODE_ENV": "dev",
+        "PORT": 3004
+      }
     }
   }
 }
