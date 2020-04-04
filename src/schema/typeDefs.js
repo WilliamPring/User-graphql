@@ -78,13 +78,16 @@ const typeDefs = `
     }
 
     input MunicipalityInput {
-        provienceState: String
-        country: String
-        cities: String
+        provienceStateName: String!
+        cities: [String]
+    }
+    input CityInput {
+        name: String
     }
 
     type Mutation {
-        createCountry(input: CountryInput!) : Country
+        CreateCity(input: CityInput!): City
+        CreateCountry(input: CountryInput!) : Country
     }
     `;
 export default typeDefs;
