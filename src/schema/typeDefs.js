@@ -84,8 +84,13 @@ const typeDefs = `
     input CityInput {
         name: String
     }
-
+    input UserInput {
+        userName: String!
+        born: Date
+        name: String!
+    }
     type Mutation {
+        CreateUser(input: UserInput!): User
         CreateCity(input: CityInput!): City
         CreateCountry(input: CountryInput!) : Country
     }

@@ -1,3 +1,4 @@
+import {createCountry, createUser}  from './dataloaders'
 export default ({
     Query: {
       hello: () => 'world'
@@ -5,8 +6,12 @@ export default ({
     Mutation: {
       CreateCountry: (_, {input} ) => {
         const jsonInput = JSON.parse(JSON.stringify(input));
-        console.log(jsonInput)
+        createCountry(jsonInput)
       },
-      CreateCity: (input) => console.log(input)
+      CreateUser: (_, {input} ) => {
+        console.log(input)
+        const jsonInput = JSON.parse(JSON.stringify(input));
+        createUser(jsonInput)
+      }
     }
 })
