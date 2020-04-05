@@ -8,9 +8,10 @@ export default ({
         const jsonInput = JSON.parse(JSON.stringify(input));
         createCountry(jsonInput)
       },
-      CreateUser: (_, {input} ) => {
+      CreateUser: async (_, {input} ) => {
         const jsonInput = JSON.parse(JSON.stringify(input));
-        createUser(jsonInput)
+        const data = await createUser(jsonInput)
+        return data;
       }
     }
 })

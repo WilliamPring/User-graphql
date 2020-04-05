@@ -1,7 +1,7 @@
 //const neo4j = require('neo4j-driver')
 //import {isEmpty} from 'lodash'
 import dbConf from '../configuration/ConfigureDatabase'
-import {genericFindAll} from './utils'
+import {genericFindAll, parseRecords} from './utils'
 export const createCountry = async (input)=> {
     try{
         const session = dbConf.createSession();
@@ -29,18 +29,14 @@ export const createUser = async (input) => {
         const genericUserAll = genericFindAll(session, 'User', {userName: input.userName})
 
         const getUsers = await genericUserAll
-            .then(result => {
-                console.log(result)
-                return result
-            }).catch(e => {
-                console.log(e)
-            }).then(() => {
-                console.log('end')
-            })
-        console.log(getUsers)
+            .then(result => result.records.map(record => record))
+            .catch(e => e)
+            .then(result => parseRecords(result))
+
+        //console.log(parseRecords(getUsers))
 
         await dbConf.closeSession();
-        return null;
+        return getUsers;
     } catch(e) {
         console.log(e)
     }

@@ -1,5 +1,5 @@
 import util from 'util';
-
+import {reduce} from 'lodash'
 export const genericReadAll = (session, nodeType) => {
     return session.readTransaction(txc => {
         const queryString = `MATCH (generic: ${nodeType}) RETURN generic`;
@@ -24,7 +24,12 @@ export const genericFindAll =  async (session, nodeType, param) => {
 // export const genericMerge = async (session, NodeType, relationship, param) => {
 
 // }
-
+export const parseRecords = (records) => {
+    return reduce(records.map(record => record.get(0)), (acc, value) => {
+        console.log(value.properties)
+        return value.properties;
+    }, []);
+}
 const genericParamGeneratorQuerry = (param) => {
     let parmsObj = {};
     let queryParmObj = Object.keys(param);
