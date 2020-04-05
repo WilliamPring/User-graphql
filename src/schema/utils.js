@@ -26,8 +26,8 @@ export const genericFindAll =  async (session, nodeType, param) => {
 // }
 export const parseRecords = (records) => {
     return reduce(records.map(record => record.get(0)), (acc, value) => {
-        console.log(value.properties)
-        return value.properties;
+            acc.push(value.properties)
+            return acc
     }, []);
 }
 const genericParamGeneratorQuerry = (param) => {

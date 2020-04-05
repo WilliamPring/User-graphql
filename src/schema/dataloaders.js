@@ -24,7 +24,6 @@ export const createCountry = async (input)=> {
 
 export const createUser = async (input) => {
     try {
-        console.log(input)
         const session = dbConf.createSession();
         const genericUserAll = genericFindAll(session, 'User', {userName: input.userName})
 
@@ -32,8 +31,7 @@ export const createUser = async (input) => {
             .then(result => result.records.map(record => record))
             .catch(e => e)
             .then(result => parseRecords(result))
-
-        //console.log(parseRecords(getUsers))
+        console.log(getUsers)
 
         await dbConf.closeSession();
         return getUsers;
