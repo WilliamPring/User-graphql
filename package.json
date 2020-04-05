@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint --fix src/** && jest --no-cache --runInBand",
     "start:dev": "better-npm-run start:dev"
   },
   "author": "",
@@ -16,17 +16,22 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/register": "^7.9.0",
     "apollo-server": "^2.11.0",
-    "babel-eslint": "^10.1.0",
     "better-npm-run": "^0.1.1",
     "config": "^3.2.4",
     "cross-env": "^7.0.2",
     "cypher-query-builder": "^5.0.4",
-    "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.2",
     "gremlin": "^3.4.6",
     "lodash": "^4.17.15",
     "neo4j-driver": "^4.0.2",
     "neo4j-graphql-js": "^2.13.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.2.7",
+    "nodemon": "^2.0.2"
   },
   "betterScripts": {
     "start:dev": {
@@ -43,5 +48,29 @@
         "PORT": 3004
       }
     }
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "**/src/**/*.js",
+      "!**/node_modules/**",
+      "!**/config/**",
+      "!**/__test__/**"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/config/"
+    ],
+    "collectCoverage": true,
+    "testEnvironment": "node",
+    "coverageDirectory": "./coverage",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover",
+      "text-summary",
+      "html"
+    ]
   }
 }

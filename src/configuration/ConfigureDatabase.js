@@ -1,4 +1,3 @@
-import { ApolloServer } from 'apollo-server';
 import neo4j from 'neo4j-driver';
 import config from 'config'
 

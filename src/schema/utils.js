@@ -18,6 +18,13 @@ export const genericFindAll =  async (session, nodeType, param) => {
     });
 }
 
+// export const genericInsert = async (session, NodeType, param) => {
+
+// };
+// export const genericMerge = async (session, NodeType, relationship, param) => {
+
+// }
+
 const genericParamGeneratorQuerry = (param) => {
     let parmsObj = {};
     let queryParmObj = Object.keys(param);
