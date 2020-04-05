@@ -9,7 +9,6 @@ export default ({
         createCountry(jsonInput)
       },
       CreateUser: (_, {input} ) => {
-        console.log(input)
         const jsonInput = JSON.parse(JSON.stringify(input));
         createUser(jsonInput)
       }

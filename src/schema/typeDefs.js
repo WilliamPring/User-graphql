@@ -86,8 +86,9 @@ const typeDefs = `
     }
     input UserInput {
         userName: String!
-        born: Date
+        born: String!
         name: String!
+        bio: String!
     }
     type Mutation {
         CreateUser(input: UserInput!): User
