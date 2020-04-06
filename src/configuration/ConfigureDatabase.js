@@ -18,6 +18,9 @@ class ConfigureDatabase {
     createSession() {
         return this._driver.session()
     }
+    createRxSession() {
+        return this._driver.rxSession()
+    }
     async closeSession() {
         return await this._driver.session().close();
     }

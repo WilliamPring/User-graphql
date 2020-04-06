@@ -18,9 +18,21 @@ export const genericFindAll =  async (session, nodeType, param) => {
     });
 }
 
-// export const genericInsert = async (session, NodeType, param) => {
 
-// };
+export const genericInsert = async (session, nodeType, param) => {
+    const genericSerachParameters = genericParamGeneratorQuerry(param)
+    console.log(genericSerachParameters)
+    return session.writeTransaction(async txc => {
+        let array = [];
+        const queryString = `CREATE (generic: ${nodeType} ${genericSerachParameters}) RETURN generic`.replace(/'/g, '');
+        console.log(queryString)
+        const result = await txc.run(queryString, {...param})
+        result.records.map(record => array.push(record.get(0).properties));
+       return array;
+        //return null;
+    });
+
+};
 // export const genericMerge = async (session, NodeType, relationship, param) => {
 
 // }
@@ -30,6 +42,14 @@ export const parseRecords = (records) => {
             return acc
     }, []);
 }
+
+export const parseRecordsCreate = (records) => {
+    return reduce(records.map(record => record.get(0)), (acc, value) => {
+            acc.push(value.properties)
+            return acc
+    }, []);
+}
+
 const genericParamGeneratorQuerry = (param) => {
     let parmsObj = {};
     let queryParmObj = Object.keys(param);
