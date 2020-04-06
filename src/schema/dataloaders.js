@@ -32,11 +32,11 @@ export const createUser = async (input) => {
             .catch(e => e)
             .then(result => parseRecords(result))
 
-        console.log(getUsers)
         if(!isEmpty(getUsers)) return null
         const createUser = await genericInsert(session, 'User', input)
         await dbConf.closeSession();
-        return createUser;
+        console.log(createUser)
+        return createUser[0];
     } catch(e) {
         console.log(e)
     }
