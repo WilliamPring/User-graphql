@@ -54,6 +54,11 @@ const typeDefs = `
         postalCode: String
         address: String
         vistedCount: ATE_AT
+        similarRestaurants(limit: Int = 10): [Restaurant] @cypher(statement: """
+        MATCH (this)<-[:ACTED_IN]-(:Actor)-[:ACTED_IN]->(rec:Movie)
+        WITH rec, COUNT(*) AS score ORDER BY score DESC
+        RETURN rec LIMIT $limit
+        """)
     }
 
     type Municipality {
