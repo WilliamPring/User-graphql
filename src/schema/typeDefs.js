@@ -57,6 +57,9 @@ const typeDefs = `
         postalCode: String
         address: String
         vistedCount: ATE_AT
+        startRating: Float @cypher(
+            statement: "MATCH (this)<-[:FOOD_REVIEW]-(review:Review) return avg(review.starRating)"
+        )
         similar: [Cuisine]
         @cypher(
           statement: "MATCH (this)-[:TYPE_OF]->(friend:Cuisine) RETURN friend"
