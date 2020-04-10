@@ -25,19 +25,16 @@ export const createCountry = async (input)=> {
 export const createUser = async (input) => {
     try {
         const session = dbConf.createSession();
-        const genericUserAll = genericFindAll(session, 'User', {userName: input.userName})
-
-        const getUsers = await genericUserAll
-            .then(result => result.records.map(record => record))
-            .catch(e => e)
-            .then(result => parseRecords(result))
-
+        const getUsers = await genericFindAll(session, 'User', {userName: input.userName})
+        console.log(getUsers)
         if(!isEmpty(getUsers)) return null
+        //generate user and return it
         const createUser = await genericInsert(session, 'User', input)
         await dbConf.closeSession();
         console.log(createUser)
         return createUser[0];
     } catch(e) {
         console.log(e)
+        return null;
     }
 }

@@ -1,3 +1,5 @@
+
+
 const typeDefs = `
     type HAS_IMAGE @relation(name: "HAS_IMAGE", direction: "OUT") {
         from: Review!
@@ -17,6 +19,7 @@ const typeDefs = `
         favorite: Boolean
     }
     type User {
+        id: ID!
         userName: String
         born: Date
         name: String
@@ -37,7 +40,7 @@ const typeDefs = `
         caption: String
         url: String
     }
-    type Cuisine{
+    type Cuisine {
       type: String
     }
     type City {
@@ -54,11 +57,10 @@ const typeDefs = `
         postalCode: String
         address: String
         vistedCount: ATE_AT
-        similarRestaurants(limit: Int = 10): [Restaurant] @cypher(statement: """
-        MATCH (this)<-[:ACTED_IN]-(:Actor)-[:ACTED_IN]->(rec:Movie)
-        WITH rec, COUNT(*) AS score ORDER BY score DESC
-        RETURN rec LIMIT $limit
-        """)
+        similar: [Cuisine]
+        @cypher(
+          statement: "MATCH (this)-[:TYPE_OF]->(friend:Cuisine) RETURN friend"
+        )
     }
 
     type Municipality {
@@ -86,9 +88,7 @@ const typeDefs = `
         provienceStateName: String!
         cities: [String]
     }
-    input CityInput {
-        name: String
-    }
+
     input UserInput {
         userName: String!
         born: String!
@@ -97,7 +97,6 @@ const typeDefs = `
     }
     type Mutation {
         CreateUser(input: UserInput!): User
-        CreateCity(input: CityInput!): City
         CreateCountry(input: CountryInput!) : Country
     }
     `;

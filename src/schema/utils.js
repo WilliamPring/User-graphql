@@ -6,7 +6,8 @@ export const genericFindAll =  async (session, nodeType, param) => {
     return session.readTransaction(async txc => {
         const queryString = `MATCH (generic: ${nodeType} ${genericSerachParameters}) RETURN generic`.replace(/'/g, '');
         const result = await txc.run(queryString, {...param})
-        return result;
+        console.log(result)
+        return parseRecords(result.records);
     });
 }
 
