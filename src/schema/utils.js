@@ -22,6 +22,17 @@ export const genericInsert = async (session, nodeType, param) => {
     });
 };
 
+
+export const genericRelationShipMerge = async (session, {firstNodeType, secondNodeType}, relationshipType, param) => {
+    const genericSerachParameters = genericParamGeneratorQuerry(param)
+    return null;
+};
+
+export const genericRelationShipDelete = async (session, {firstNodeType, secondNodeType}, relationshipType, param) => {
+    const genericSerachParameters = genericParamGeneratorQuerry(param)
+    return null;
+};
+
 export const parseRecords = (records) => {
     return reduce(records.map(record => record.get(0)), (acc, value) => {
             acc.push(value.properties)

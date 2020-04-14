@@ -23,6 +23,10 @@ CREATE (Sabai:Restaurant {name: 'Sabai Sabai', bio: "The cooking of Northern Tha
 CREATE (Sabai)-[:LOCATED_AT]->(locateCity)
 CREATE (Sabai)-[:TYPE_OF]->(Thai)
 CREATE (BeefBentoPost)-[:FOOD_REVIEW]->(Sabai)
+CREATE (Bento)-[:FOLLOWING {followSince: date("2020-01-01")}]->(BeefBento)
+CREATE (BeefBento)-[:FOLLOWING {followSince: date("2020-01-01")}]->(Bento)
+
+
 
 match (:Cuisine)<-[:TYPE_OF]->(R:Restaurant)<-[FOOD_REVIEW]-(review:Review)
 RETURN R.name, review.starRating

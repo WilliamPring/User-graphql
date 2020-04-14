@@ -31,10 +31,14 @@ export const createUser = async (input) => {
         //generate user and return it
         const createUser = await genericInsert(session, 'User', input)
         await dbConf.closeSession();
-        console.log(createUser)
+        console.log('user create', createUser)
         return createUser[0];
     } catch(e) {
         console.log(e)
         return null;
     }
+}
+
+export const createFollowing = async (input) => {
+    return input;
 }

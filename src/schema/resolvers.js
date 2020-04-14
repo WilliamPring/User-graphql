@@ -1,4 +1,4 @@
-import {createCountry, createUser}  from './dataloaders'
+import {createCountry, createUser, createFollowing}  from './dataloaders'
 export default ({
     Query: {
       hello: () => 'world'
@@ -10,7 +10,13 @@ export default ({
       },
       CreateUser: async (_, {input} ) => {
         const jsonInput = JSON.parse(JSON.stringify(input));
-        const data = await createUser(jsonInput)
+        const data = await createUser(jsonInput);
+        console.log(data)
+        return data;
+      },
+      CreateFollowing: async (_, {input } ) => {
+        console.log(input)
+        const data = await createFollowing(input);
         return data;
       }
     }
