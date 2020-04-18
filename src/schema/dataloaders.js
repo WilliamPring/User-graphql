@@ -25,6 +25,7 @@ export const createCountry = async (input)=> {
 export const createUser = async (input) => {
     try {
         const session = dbConf.createSession();
+
         const getUsers = await genericFindAll(session, 'User', {userName: input.userName})
         console.log(getUsers)
         if(!isEmpty(getUsers)) return null

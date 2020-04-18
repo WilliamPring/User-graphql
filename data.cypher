@@ -1,5 +1,5 @@
-CREATE (Bento:User {name:'William Pring', userName: 'Bento', born: date({year:1999, month:5, day:6}), about:'Foodie'})
-CREATE (BeefBento:User {name:'Will Pringles', userName: 'BeefBento', born: date({year:1984, month:10, day:11}), about:'Foodie'})
+CREATE (Bento:User {userId: apoc.create.uuid(), name:'William Pring', userName: 'Bento', born: date({year:1999, month:5, day:6}), about:'Foodie'})
+CREATE (BeefBento:User {userId: apoc.create.uuid(), name:'Will Pringles', userName: 'BeefBento', born: date({year:1984, month:10, day:11}), about:'Foodie'})
 CREATE (BeefBentoPost:Review {reviewSummary:'Green Curry is not bad a bit spicy', starRating: 4, foods: ['Green Curry']})
 CREATE (BentoPost:Review {reviewSummary:'Amazing Thai Food MUST TRY!!!!', starRating: 4.5, foods: ['Thai Chicken Wings', 'Thai Ice Tea']})
 CREATE (locateCountry:Country {name: 'Canada'} )
@@ -26,7 +26,14 @@ CREATE (BeefBentoPost)-[:FOOD_REVIEW]->(Sabai)
 CREATE (Bento)-[:FOLLOWING {followSince: date("2020-01-01")}]->(BeefBento)
 CREATE (BeefBento)-[:FOLLOWING {followSince: date("2020-01-01")}]->(Bento)
 
+CALL apoc.uuid.install('User')
+YIELD label, installed, properties
+RETURN label, installed, properties
 
+
+CALL apoc.uuid.install('Review')
+YIELD label, installed, properties
+RETURN label, installed, properties
 
 match (:Cuisine)<-[:TYPE_OF]->(R:Restaurant)<-[FOOD_REVIEW]-(review:Review)
 RETURN R.name, review.starRating
