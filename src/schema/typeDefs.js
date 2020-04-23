@@ -116,15 +116,20 @@ const typeDefs = `
         CreateCountry(input: CountryInput!) : Country
         CreateUser(input: UserInput!) : User
         CreateFollowing(input: UserFollowing!): User
-        AddFollower(userID: ID!, userFollowID: ID!): User
-        @cypher(
+
+        AddFollower(userName: String!, followerUserName: String!): User @cypher(
             statement:"""
-                MATCH (from:User {uuid: $userID})
-                MATCH (to:User {uuid: $userFollowID})
+                MATCH (from:User {userName: $userName})
+                MATCH (to:User {userName: $followerUserName})
                 MERGE (from)-[:FOLLOWING]->(to)
                 RETURN to
-              """)
-
+            """)
+        RemoveFollower(userName: String!, followerUserName: String!): User @cypher(
+            statement:"""
+            MATCH (from:User{userName: $userName})-[r:FOLLOWING]->(to:User{userName: $followerUserName})
+            DELETE r
+            RETURN from
+            """)
     }
     `;
 export default typeDefs;
