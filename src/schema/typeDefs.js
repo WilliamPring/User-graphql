@@ -35,6 +35,7 @@ const typeDefs = `
 
     type Review {
         _id: ID!
+        uuid: ID
         foods: [String]
         starRating: Float
         reviewSummary: String
@@ -60,6 +61,7 @@ const typeDefs = `
     }
     type Restaurant {
         _id: ID!
+        uuid: ID
         name: String
         priceRange: String
         info: String
@@ -112,11 +114,21 @@ const typeDefs = `
         userId: ID!
         userToFollow: ID!
     }
+    input FoodInput {
+        food: String
+    }
     type Mutation {
         CreateCountry(input: CountryInput!) : Country
         CreateUser(input: UserInput!) : User
         CreateFollowing(input: UserFollowing!): User
 
+        CreateUserReview(userName: String!, restaurantID: String!, reviewSummary: String!, reviewRating: Int!, foods: [String]) : Review @cypher(
+            statement:"""
+                MATCH (user:User {userName: $userName})
+                MATCH (restaurant:Restaurant {uuid: $restaurantID})
+                CREATE (user)-[:HAS_POST]->(review:Review {reviewSummary: $reviewSummary, starRating: $reviewRating, foods: $foods})-[:FOOD_REVIEW]->(restaurant)
+                return review
+            """)
         AddFollower(userName: String!, followerUserName: String!): User @cypher(
             statement:"""
                 MATCH (from:User {userName: $userName})

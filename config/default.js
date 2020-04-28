@@ -5,6 +5,6 @@ module.exports = ({
     },
     GraphqlSchemaConfig: {
         query: true,
-        mutation: false //Do not generate mutation make them yourself
+        mutation: true //Do not generate mutation make them yourself
       }
 })

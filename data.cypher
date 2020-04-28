@@ -29,15 +29,36 @@ CREATE (BeefBento)-[:FOLLOWING {followSince: date("2020-01-01")}]->(Bento)
 
 
 CREATE CONSTRAINT ON (user:User) ASSERT user.userName IS UNIQUE
-
 CREATE CONSTRAINT ON (user:User)
-ASSERT user.uuid IS UNIQUE
-
+ASSERT user.uuid IS UNIQUE;
 CALL apoc.uuid.install('User')
 YIELD label, installed, properties
-RETURN label, installed, properties
+RETURN label, installed, properties;
 
 
+CREATE CONSTRAINT ON (restaurant:Restaurant) ASSERT restaurant.restaurantUUID IS UNIQUE;
+CALL apoc.uuid.install('Restaurant', {addToExistingNodes: true, uuidProperty: 'restaurantUUID'})
+YIELD label, installed, properties
+RETURN label, installed, properties;
+
+
+
+
+// CREATE (user)-[:HAS_POST {postedAt: date("2020-12-12")}]->(BentoPost)
+// CREATE (usera)-[:]->(d);
+
+MATCH (user:User {userName: "BeefBento"})
+create (user)-[:]->(b {name : "bar"}),
+       (c {name: "Baz"})-[:GOODBYE]->(d {name:"Quux"});
+
+MATCH (user:User {userName: "BeefBento"})
+create (user)-[:HAS_POST]->(review:Review {reviewSummary:'Green Curry is not bad a bit spicy', starRating: 4, foods: ['Green Curry']}),
+
+
+MATCH (user:User {userName: "BeefBento"})
+MATCH (review:Review {userName: "BeefBento"})
+CREATE (user)-[:HAS_POST]->(review:Review {reviewSummary:'Green Curry is not bad a bit spicy', starRating: 4, foods: ['Green Curry']}),
+CREATE (review)-[:GOODBYE]->(d {name:"Quux"});
 
 
 match (:Cuisine)<-[:TYPE_OF]->(R:Restaurant)<-[FOOD_REVIEW]-(review:Review)
