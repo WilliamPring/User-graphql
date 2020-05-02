@@ -121,10 +121,24 @@ const typeDefs = `
     input FoodInput {
         food: String
     }
+
+    input ImageInput {
+        reviewId: String!
+        takeAt: String!
+        caption: String!
+        url: String!
+    }
     type Mutation {
         CreateCountry(input: CountryInput!) : Country
         CreateUser(input: UserInput!) : User
         CreateFollowing(input: UserFollowing!): User
+        CreateReviewImage(input: ImageInput) : Image @cypher(
+            statement:"""
+                MATCH (review:Review {uuid: $input.reviewId})
+                CREATE (review)-[:HAS_POST {takeAt: $input.takeAt}]->(image:Image {caption: $input.caption, url: $input.url})
+                return image
+            """)
+
         CreateUserReview(userName: String!, restaurantID: String!, reviewSummary: String!, reviewRating: Int!, foods: [String]) : Review @cypher(
             statement:"""
                 MATCH (user:User {userName: $userName})
