@@ -24,6 +24,17 @@ export const genericInsert = async (session, nodeType, param) => {
     });
 };
 
+export const getUUIDBaseOnID = async (session, id) => {
+    return session.writeTransaction(async txc => {
+        const queryString = `MATCH (n) WHERE id(n)=${id} RETURN n`;
+        console.log(queryString)
+        const result = await txc.run(queryString)
+        console.log(result)
+        console.log(result.summary.query)
+       // result.records.map(record => array.push(record.get(0).properties));
+       return parseRecords(result.records);
+    });
+};
 
 export const genericRelationShipMerge = async (session, {firstNodeType, secondNodeType}, relationshipType, param) => {
     const genericSerachParameters = genericParamGeneratorQuerry(param)

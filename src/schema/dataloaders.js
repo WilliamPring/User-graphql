@@ -1,7 +1,7 @@
 //const neo4j = require('neo4j-driver')
 import {isEmpty} from 'lodash'
 import dbConf from '../configuration/ConfigureDatabase'
-import {genericFindAll, parseRecords, genericInsert} from './utils'
+import {genericFindAll,getUUIDBaseOnID , genericInsert} from './utils'
 export const createCountry = async (input)=> {
     try{
         const session = dbConf.createSession();
@@ -42,4 +42,12 @@ export const createUser = async (input) => {
 
 export const createFollowing = async (input) => {
     return input;
+}
+
+
+export const getUUID = async (input) => {
+    const session = dbConf.createSession();
+    const uuid = await getUUIDBaseOnID(session, input);
+    await dbConf.closeSession();
+    return uuid;
 }

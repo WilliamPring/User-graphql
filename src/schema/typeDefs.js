@@ -19,6 +19,7 @@ const typeDefs = `
         favorite: Boolean
     }
 
+
     type User {
         uuid: ID!
         _id: ID!
@@ -36,11 +37,13 @@ const typeDefs = `
     type Review {
         _id: ID!
         uuid: ID
+        author: User @relation(name: "HAS_POST" direction: "IN")
         foods: [String]
         starRating: Float
         reviewSummary: String
         images: [Image] @relation(name: "HAS_IMAGE", direction: "OUT")
         comments: HAS_POST
+        restaurant: Restaurant @relation(name: "FOOD_REVIEW", direction: "OUT")
     }
 
     type Image {
@@ -92,6 +95,7 @@ const typeDefs = `
     type Query {
         "A simple type for getting started!"
         hello: String
+        getUUID(id: ID!): ID
     }
 
     input CountryInput {
@@ -121,7 +125,6 @@ const typeDefs = `
         CreateCountry(input: CountryInput!) : Country
         CreateUser(input: UserInput!) : User
         CreateFollowing(input: UserFollowing!): User
-
         CreateUserReview(userName: String!, restaurantID: String!, reviewSummary: String!, reviewRating: Int!, foods: [String]) : Review @cypher(
             statement:"""
                 MATCH (user:User {userName: $userName})

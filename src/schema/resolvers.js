@@ -1,7 +1,11 @@
-import {createCountry, createUser, createFollowing}  from './dataloaders'
+import {createCountry, createUser, createFollowing, getUUID}  from './dataloaders'
 export default ({
     Query: {
-      hello: () => 'world'
+      hello: () => 'world',
+      getUUID: async (_, {id}) => {
+       const uuid = await getUUID(id);
+        return uuid[0].uuid
+      }
     },
     Mutation: {
       CreateCountry: (_, {input} ) => {
